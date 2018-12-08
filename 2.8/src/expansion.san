@@ -1,0 +1,84 @@
+<template>
+
+    <div class="{{computedClassName}}">
+            <div class="sm-expansion-panel-header">
+                <div class="sm-expansion-panel-title">
+                    <slot name="title">{{title}}</slot>
+                </div>
+                <div class="sm-expansion-panel-description">
+                    <slot name="description">{{description}}</slot>
+                </div>
+                <san-icon-button
+                    style="{{iconStyle}}"
+                    on-click="toggle">
+                    {{icon}}
+                </san-icon-button>
+            </div>
+            <div class="sm-expansion-panel-content" style="{{contentStyle}}">
+                <slot />
+            </div>
+        </div>
+</template>
+
+<script>
+import css from 'san-mui/es/common/util/css.js'
+import IconButton from './IconButton.san'
+import './ExpansionPanel.styl'
+export default {
+    components: {
+        'san-icon-button': IconButton
+    },
+    attached: function(){
+        console.log("attached");
+
+    },
+
+    initData: function(){
+        return {
+            tiltle: "dfadfad",
+            open: false,
+            icon: 'keyboard_arrow_down',
+        }
+    },
+
+    computed: {
+        computedClassName() {
+            let open = this.data.get('open');
+            return 'sm-expansion-panel' 
+                    + (open ? ' state-open' 
+                            : '')
+        },
+        contentStyle() {
+            let open = this.data.get('open');
+            let style = css({
+                transform: `scaleY(${open ? 1 : 0})`,
+                overflowY: open ? 'auto' : 'hidden',
+                maxHeight: open ? 'auto' : '0px',
+                opacity: open ? 1 : 0
+            });
+            return style;
+        },
+        iconStyle: function(){
+            let open = this.data.get('open');
+            return css({
+                transform: `rotate(${open ? 180 : 0}deg)`
+            });
+        }
+    },
+
+    toggle: function(){
+        console.log("???")
+        this.data.set('open', !this.data.get('open'));
+    }
+
+
+};
+
+</script>
+
+
+<style>
+
+
+
+</style>

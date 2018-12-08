@@ -1,0 +1,72 @@
+.wrap, .wrap > div
+    display flex
+
+
+input
+    cursor pointer
+    border-radius: 4px
+    width: 180px;
+    height 25px;
+    padding: 2px 5px
+    border solid 1px rgba(177, 179, 183, 0.7)
+    
+    &:focus 
+        border: rgba(0, 188, 212, 0.4) solid 1.5px
+        outline: none 
+        border-radius: 4px
+
+.wrap  
+
+    ul 
+        background-color: rgba(226, 226, 226, 0.1)
+        list-style-type none
+        margin 1px
+        padding  10px 1px
+        width auto
+        min-width 100px
+        height auto
+        overflow auto
+        box-shadow: 2px 3px 2px 1px rgba(0,0,0,0.1)
+
+   
+        li
+            color rgb(158, 158, 158)
+            padding 8px
+            &:hover
+                color rgba(109, 91, 130, 0.71);
+                cursor pointer
+                background-color rgba(0, 188, 212, 0.4)
+
+
+.slide
+    &-enter
+        transition: all .3s
+        opacity: 1;
+        transform: translate(0, 0);
+    
+
+    &-before
+        &-enter
+            opacity: 0;
+            transform: translate(20px, 0);
+
+        &-leave
+            opacity: 1;
+            transform: translate(0, 0); 
+
+    &-leave
+        transition: all 0s
+        opacity 0; 
+
+//.slide-enter
+//    transition: all .3s;
+//
+//.slide-enter, .slide-before-leave 
+//    opacity: 1;
+//    transform: translate(0, 0);
+//.slide-before-enter 
+//    opacity: 0;
+//    transform: translate(20px, 0);
+//.slide-leave 
+//    opacity: 0;
+

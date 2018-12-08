@@ -1,0 +1,60 @@
+<template>
+    <button
+        class="{{computedClassName}}"
+        type="{{type}}"
+        disabled="{{disabled}}"
+        on-click="onClick($event)">
+        <i class="sm-icon" style="{{size ? 'font-size:' + size + 'px' : ''}}">
+            <slot />
+        </i>
+        <san-center-ripple />
+    </button>
+</template>
+
+<script>
+import './IconButton.styl'
+import {DataTypes} from 'san';
+import CenterRipple from 'san-mui/lib/Ripple/CenterRipple'
+import 'san-mui/lib/Ripple/CenterRipple.styl'
+
+export default {
+
+    attached: function(){
+        console.log("attached");
+
+    },
+
+    components: {
+        'san-center-ripple' : CenterRipple
+    },
+
+    initData() {
+        return {
+            type: 'button',
+            disabled: false
+        };
+    },
+    
+    computed: {
+        computedClassName() {
+            return "IconButton";
+        }
+    },
+
+    dataTypes: {
+        type: DataTypes.string,
+        disabled: DataTypes.bool
+    },
+
+    onClick(e) {
+        if (!this.data.get('disabled')) {
+            console.log("????——————")
+            this.fire('click', e);
+        }
+    }
+
+
+}
+
+
+</script>

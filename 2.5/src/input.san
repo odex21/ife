@@ -1,0 +1,45 @@
+<template>
+<div class="inputArea">
+    <h2>基础状态</h2>
+    <ul>
+        <li>
+            <input type="text" value="{= content1 =}" placeholder="请输入文字" class="{{isError1 ? 'error' : ''}}" on-blur="check(1)">
+            <p id="input1" s-if="{{isError1}}">里面需要有中文</p>
+        </li>
+        <li>
+            <input type="text" value="{= content2 =}" placeholder="请输入文字" class="{{isError2 ? 'error' : ''}}" on-blur="check(2)">
+            <p id="input2" s-if="{{isError2}}">里面需要有中文</p>
+        </li>
+        
+    </ul>
+    <input type="text" value="{= content3 =}" placeholder="请输入文字" disabled>
+    
+</div>
+</template>
+
+<script>
+    export default {
+
+        initData: function(){
+            return {
+                isError1: false,
+                isError2: false,
+                content: '',
+            }
+        },
+    
+        check: function(num){
+            let t = this.data.get('isError');
+            let reg = /[\u4e00-\u9fa5]/,
+                c = this.data.get('content' + num);
+            t =  reg.test(c);
+            this.data.set('isError' + num, !t)
+            console.log("??")
+            console.log(t)
+        }
+
+
+    }
+
+
+</script>

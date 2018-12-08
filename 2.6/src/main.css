@@ -1,0 +1,33 @@
+body > div{
+    width: 810px; 
+}
+
+.block {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.task {
+    margin: 10px;
+    background-color: rgba(45, 44, 13, 0.38);
+    width: 250px;
+    
+}
+
+h3 {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.575);
+    width: 115px;
+    margin: 20px auto;
+    line-height: 30px;
+    font-size: 15px;
+}
+
+.t-block {
+    margin: 20px auto;
+    right: 30px;
+    width: 180px;
+    padding: 10px;
+    background: rgb(255, 235, 185, 0.72)
+    
+}

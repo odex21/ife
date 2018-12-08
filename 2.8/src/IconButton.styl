@@ -1,0 +1,59 @@
+/**
+ * @file Icon styles
+ * @author leon <ludafa@outlook.com>
+ */
+
+@font-face
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Material Icons'), local('./common/font/MaterialIcons-Regular'), url(./common/font/MaterialIcons-Regular.woff2) format('woff2'), url(./common/font/MaterialIcons-Regular.woff) format('woff'), url(./common/font/MaterialIcons-Regular.ttf) format('truetype');
+
+.sm-icon
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+
+.IconButton
+    position: relative
+    box-sizing: border-box
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px
+    padding: 0 6px 
+    line-height: @height
+    background-color: #fff
+    border: none
+    outline: none
+    font-family: Roboto
+    font-size: 14px
+    border-radius: 2px
+    
+    text-transform: uppercase
+    overflow: hidden
+    text-decoration: none
+    vertical-align: middle;
+    cursor: pointer
+    user-select: none
+
+    transition: all .3s

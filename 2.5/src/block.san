@@ -1,0 +1,36 @@
+<template>
+    <div 
+        id="block"
+        style="background-color:{{color}}; width:{{width}}px; height:{{height}}px"
+        on-click="toggle"
+    >
+
+    </div>
+</template>
+
+<script>
+    export default {
+
+        initData: function(){
+            return{
+                tap: true,
+                color: 'red',
+                width: '100',
+                height: '100'
+            }
+        },
+
+        toggle: function(){
+            let t = this.data.get('tap')
+            if(t){
+                this.data.set('color', 'blue')
+                this.data.set('tap', false)
+            }else{
+                this.data.set('color', 'red')
+                this.data.set('tap', true)
+            }
+        }
+
+    }
+
+</script>

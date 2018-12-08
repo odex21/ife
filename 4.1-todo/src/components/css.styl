@@ -1,0 +1,74 @@
+.slide
+    &-enter
+    &-leave 
+        transition: all .3s ease-out
+
+    &-enter
+    &-before-leave 
+        opacity: 1;
+        transform: translate(0, 0);
+    
+    &-before-enter
+    &-leave 
+        transform: translate(5px, 0);
+        opacity: 0.1;
+
+
+
+#input
+    margin 10px auto
+    width 600px
+
+    input 
+        width: 400px
+        height: 50px
+        font-size: 28px
+        
+    .header
+        margin: 10px auto
+        width: 404px
+
+        
+    .box
+        margin: 10px auto
+        padding: 0
+        width: 404px
+        height: 21px
+        text-align: justify
+        overflow hidden
+        
+
+        &:after
+            content ""
+            width: 100%
+            display: inline-block
+
+        i
+            display inline-block
+            font-style: normal
+            background-color #00BCD4
+            text-align: center
+            a
+                color: white
+                padding 3px 20px
+
+
+.todo-lists
+    margin: 10px auto
+    width: 404px
+    input 
+        padding-left:  60px
+        width: 340px           
+        height: 50px
+
+    input[type=checkbox]
+        width: 50px
+        height: 50px
+        position absolute
+    .list
+        position relative
+        .delete
+            position absolute
+            right 10px
+            top 10px
+            cursor pointer

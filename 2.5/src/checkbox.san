@@ -1,0 +1,186 @@
+<template>
+<div on-click="nonselect($event)">
+    <ul>
+        <li>
+            <label><input type="checkbox" value="all" checked="{= isall =}" indeterminate="{= inde1 =}">全选</label>
+        </li>
+        <li>
+            <label><input type="checkbox" value="errorrik" checked="{= online =}">errorrik</label>
+        </li>
+        <li>
+            <label><input type="checkbox" value="firede" checked="{= online =}">firede</label>
+        </li>
+        <li>
+            <label><input type="checkbox" value="otakustay" checked="{= online =}" indeterminate="{= inde2 =}">otakustay</label>
+        </li>
+        <li>
+            <ul>
+                <li>
+                    <label><input type="checkbox" value="a" checked="{= otakustay =}">firede</label>
+                </li>
+                <li>
+                    <label><input type="checkbox" value="b" checked="{= otakustay =}">otakustay</label>
+                </li>
+
+            </ul>
+        </li>
+    </ul>
+</div>
+</template>
+
+<script>
+    export default {
+
+        initData: function () {
+            return {
+                online: [],
+                isall: [],
+                otakustay: [],
+                inde1: 'false',
+                inde2: '',
+            };
+        },
+
+        attached: function () {
+            this.data.set('online', ['errorrik', ]);
+            this.data.set('isall', [])
+            this.data.set('otakustay', [])
+        },
+
+        nonselect: function(e){
+            if(e.target.nodeName === 'INPUT'){
+                let online = this.data.get('online'),
+                    otakustay = this.data.get('otakustay');
+            let self = this;
+
+            switch(e.target.value){
+                //全选
+                case 'all':{
+
+                    if(this.data.get('isall').length !== 0){
+                        console.log("click all")
+                        this.data.set('online', ['errorrik', 'otakustay', 'firede']);
+                        this.data.set('otakustay', ['a', 'b']);
+                        this.data.set('inde2', '');
+                        this.data.set('inde', '', 'force');
+                        console.log(online)
+                    }else{
+                        this.data.set('online', []);
+                        this.data.set('otakustay', []);
+
+                    }
+                    break
+                }
+                //分支全选
+                case 'otakustay':{
+                    if(this.data.get('otakustay').length == 2){
+                        this.data.set('otakustay', []);
+                    }else{
+                        this.data.set('otakustay', ['a', 'b']);
+                    }
+                    otakustay = this.data.get('otakustay')//手动更新otakustay
+                    check(online, 3, 'inde1', 'isall', ['all'], otakustay, 2)
+                    break
+
+                }
+                //分支子项选择
+                case 'b':
+                case 'a':{
+                    console.log("2222222222???!111111111111111111111111")
+                    //返回true就给isall打个标记
+                    switch(check(otakustay, 2, 'inde2', 'online', ['otakustay'])){
+                        case 0:{
+                            self.data.set('inde1', 'true', 'force')
+                        }
+                        case 1:{
+                            console.log("下一轮检测")
+                            online = this.data.get('online')//手动更新online
+                            console.log(online)
+
+                            check(online, 3, 'inde1', 'isall', ['all'])
+                        }
+
+                    }
+
+                    break;
+                }
+                //一级子项判定
+                default:{
+                    console.log("default")
+                    check(online, 3, 'inde1', 'isall', ['all'], otakustay, 2)
+                }
+            }
+            console.log(online.length)
+            console.log(online)
+            console.log(this.data.get('inde'))
+            console.log(this.data.get('all'))
+            console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+            //检查当前数据组是否满了，控制父级的indeterminate的显示
+            function check(online, len, inde, isall, all, ex, exlen){//inde,isall is string
+                console.log(online.length)
+                console.log(len)
+
+                if(online.length === len){
+                    console.log("开始判定是否全选")
+                    if(ex){//给一级数据组用于检测二级数据组是否满了
+                    console.log(ex.length)
+                        if(ex.length !== exlen){
+                            console.log("???")
+                            return
+                        }
+                    }
+                    self.data.set(inde, '', 'force');
+                    console.log("父选项组")
+                    console.log(isall)
+                    console.log("现在点选的checkbox在父的名字")
+                    console.log(all)
+
+                    let ar = self.data.get(isall);
+                    console.log("已经选了的")
+                    console.log(ar)
+    
+                    let j = 0;
+                    for(let i = 0; i < ar.length; i++){
+                        console.log(ar[i])
+                        console.log(all[0])
+                        if(ar[i] !== all[0]){
+                            console.log("!equals")
+                            j++;
+                        }
+                    }
+                    if(j == ar.length){
+                        ar = ar.concat(all)
+                    }
+
+                    console.log("__________________")
+                    console.log(ar)
+                    self.data.set(isall, ar)//要改
+             
+                    console.log("全选了")
+                    console.log(all[0])
+                    console.log(self.data.get('online'))
+                    console.log(self.data.get('online').length)
+
+                    return 1
+
+                }else if(online.length === 0){
+                    console.log("00000000000")
+                    self.data.set(inde, '', 'force');
+                    self.data.remove(isall, all[0])
+
+                }else{
+                    self.data.set(inde, 'true', 'force');
+                    console.log("没满！！！ change")
+                    self.data.remove(isall, all[0])
+                    return 0
+                }
+            }
+
+            }
+        }
+    }
+
+
+</script>
+indeterminate="{{inde}}

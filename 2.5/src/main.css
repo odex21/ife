@@ -1,0 +1,156 @@
+*{
+
+}
+body{
+    padding: 0;
+    margin: 0;
+}
+
+table tr td{
+    border: solid 3px red;
+    padding: 10px;
+}
+
+.titleArea{
+    background-color: rgb(77, 74, 74);
+    padding: 0;
+    padding-left: 20px;
+    margin: 0;
+    height: 200px;
+}
+.cname{
+    padding-top: 30px;
+    padding-left: 0;
+    margin-bottom: 10px;
+    color: white;
+    font-size: 30px;
+    font-weight: normal;
+    position: relative;
+}
+
+.name{
+    position: absolute;
+    width: 30px;
+    height: 17px;
+    left: 115px;
+    top: 38px;
+    font-size: 13px;
+    color: rgb(167, 167, 167);
+    text-align: center;
+}
+
+.logo{
+    position: absolute;
+    width: 30px;
+    left: 116px;
+    top: 26px;
+    font-size: 10px;
+    color: rgb(51, 50, 50);
+    background-color: grey;
+    text-align: center;
+}
+.content{
+    color:rgb(148, 146, 146);
+    font-size: 15px;
+}
+h2{
+    color: rgba(0, 0, 0, 0.808);
+    padding-left: 10px;
+    position: relative;
+}
+h2::before{
+    content: "";
+    background: rgba(0, 0, 0, 0.808);
+    width: 4px;
+    height: 70%;
+    position: absolute;
+    bottom: 3px;
+    left: 0px;
+}
+.inputArea{
+    padding: 20px;
+}
+
+input::placeholder{
+    color: rgba(0, 0, 0, 0.3);
+}
+
+input[type=text]{
+    width: 300px;
+    height: 30px;
+    padding-left: 5px;
+    border: solid rgba(0, 0, 0, 0.151) 1.5px;
+    margin: 20px;
+    margin-left: 0;
+    font-size: 12px;
+    position: relative;
+}
+input:focus{
+    outline: none;
+    border: rgba(0, 0, 0, 0.4) solid 1.5px;
+
+}
+
+input:hover{
+    border: rgba(0, 0, 0, 0.4) solid 1.5px;
+
+}
+input:disabled{
+    background-color: rgba(0, 0, 0, 0.021);
+    color: rgba(0, 0, 0, 0.582);
+}
+input[disabled]:hover{
+    border: solid rgba(0, 0, 0, 0.151) 1.5px;
+}
+.error{
+    border: rgba(253, 0, 0, 0.61) solid 1.5px !important;
+
+}
+  
+li{
+ 
+    position: relative;
+    list-style: none;
+    margin: 0px;
+}
+.inputArea ul{
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0;
+    margin: 0;
+}
+
+#input2{
+    position: absolute;
+    width: 110px;
+    top: 12px;
+    left: 320px;
+    color: red;
+    font-size: 15px;
+}
+
+#input1{
+    position: absolute;
+    top: -30px;
+    text-align: center;
+    vertical-align: middle;
+    width: 150px;
+    height: 30px;
+    color:rgba(255, 0, 0, 0.8);
+    line-height: 30px;
+    background: rgba(255, 138, 138, 0.363);
+    border-radius: 6px;
+}
+#input1::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border: solid 4px rgba(0, 0, 0, 0);
+    border-top: solid 5px  rgba(255, 138, 138, 0.363);
+    position: absolute;
+    top: 30px;
+    left: 45px;
+}
+
+/*
+*/

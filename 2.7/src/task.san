@@ -1,0 +1,143 @@
+<template>
+<div>
+    容器内增加的block不能够有margin和padding，不然收回去的时候会有卡顿。
+   <x-task data="{{task}}"  list="{{list}}" s-ref="task" class="block">
+        <p slot="n-title">{{c.label}}: {{n.title}}</p>
+        <p slot="n-content">{{c.label}}: {{n.content}}</p>
+        <p slot="n-time">{{c.label}}: {{n.time}}</p>
+   </x-task>
+</div>
+</template>
+
+<script>
+    import san from 'san';
+    import './main.css'
+    import {transition} from 'san-transition'
+    let Task = san.defineComponent({
+        template:   `<div>
+                        <div s-for="n , index in data" class="task" on-click="toggle(index, data)">
+                            <h3>{{n.name}}</h3>
+                            <div></div>
+                            <div s-if="{{n.show}}" class="t-block" s-transition="transition('hook', 300)" >
+                            <template s-for="c in list">
+                            <slot name="n-{{c.name}}" var-n="n" var-c="c">
+                            </slot>
+                            </template>
+                            </div>
+                        </div>
+                    </div>`,
+        toggle: function(index, data){
+            console.log(this.data.get('data.' + index + '.show'))
+            this.data.set('data.' + index + '.show', !this.data.get('data.' + index + '.show'))
+        },
+
+        transition
+
+    })
+
+
+    export default {
+        components: {
+            "x-task" : Task
+        },
+
+        attached: function(){
+            let slots = this.ref('task').slot();
+            console.log(this.data.get('task'))
+        },
+
+        initData: function(){
+            return {
+                list: [
+                    {name: 'name', label: ''},
+                    {name: 'title', label: '标题1'},
+                    {name: 'content', label: '内容'},
+                    {name: 'time', label: '时间'}
+                ],
+                task: [
+                    {name: "任务一", title: "插槽", content: "xxxxxxx", time: "2018-11-12", show: false},
+                    {name: "任务一", title: "插槽", content: "xxxxxxx", time: "2018-11-12", show: false},
+                    {name: "任务一", title: "插槽", content: "xxxxxxx", time: "2018-11-12", show: false},
+                    {name: "任务一", title: "插槽", content: "xxxxxxx", time: "2018-11-12", show: false},
+                    {name: "任务一", title: "插槽", content: "xxxxxxx", time: "2018-11-12", show: false},
+                    {name: "任务一", title: "插槽", content: "xxxxxxx", time: "2018-11-12", show: false},
+                ]
+            }
+        },
+
+        toggle() {
+            console.log(this.data.get('show'))
+            this.data.set('show' , !this.data.get('show'));
+        },
+
+
+    }
+
+</script>
+
+<style>
+
+.block {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.task {
+    margin: 10px;
+    background-color: rgba(45, 44, 13, 0.38);
+    width: 250px;
+    padding: 10px 0;
+    
+}
+
+h3 {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.575);
+    width: 115px;
+    margin: 20px auto;
+    line-height: 30px;
+    font-size: 15px;
+}
+
+.t-block {
+    margin: 0px auto;
+    right: 30px;
+    width: 180px;
+    height: 120px;
+    background: rgb(255, 235, 185, 0.72);
+    overflow: hidden;
+    
+    
+}
+p{
+    margin: 0 5px 10px;
+    padding-top: 30px;
+}
+p + p{
+    padding-top: 0px;
+
+}
+.hook-enter, .hook-leave{
+    transition: all 1s;
+}
+
+.hook-enter, .hook-before-leave{
+    height: 120px;
+    opacity: 1;
+
+}
+
+.hook-before-enter, .hook-leave{
+    height: 0px;
+    opacity: 0;
+}
+</style>
+
+
+
+
+
+
+
+
+

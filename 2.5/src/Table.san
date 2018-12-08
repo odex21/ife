@@ -1,0 +1,56 @@
+<template>
+    <div>
+        <button on-click = "addlist">添加</button>
+        
+        <table>
+            <tr s-for="p, index in persons trackBy p.option">
+                <td>{{p.name}}</td>
+                <td s-if="p.option">{{p.state > 60 ?'合格' : '不合格'}}</td>
+                <td s-else>未审核</td>
+                <td>
+                    <button on-click="action(p, index)" s-if="p.option">删除</button>
+                    <button on-click="action(p, index)" s-else>审核</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</template>
+
+<script>
+import './main.css';
+export default {
+
+
+    initData: function () {
+        return {
+            dept: 'ssg',
+            persons: [
+                {name: 'errorrik', state: 61, option: 0},
+                {name: 'otakustay', state: 62, option: 0}
+            ]
+        };
+    },
+    addlist: function(){
+        this.data.push('persons', {name: '还不会xml', state: 50, option: 0})
+    },
+    action: function(p, index){
+        console.log(p)
+        console.log("???")
+        if(p.option == 1){
+            console.log("删除")
+            console.log(this.data.get('persons'));
+            this.data.removeAt('persons', index);
+        }else{
+            console.log("审核中  " + index);
+            console.log(p.option);
+            let state = p;
+            this.data.set('persons.' + index + '.option', '1')
+        }
+    }
+
+
+}
+</script>
+<style>
+
+</style>

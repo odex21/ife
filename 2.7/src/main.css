@@ -1,0 +1,15 @@
+body > div{
+    max-width: 810px; 
+}
+
+.slide-enter, .slide-leave {
+    transition: all .5s;
+  }
+  .slide-enter, .slide-before-leave {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  .slide-before-enter, .slide-leave {
+    opacity: 0;
+    transform: translate(100px, 0);
+  }
