@@ -8,7 +8,6 @@ class Content extends Component {
 
     static template = `
     <div>
-    1
         <slot 
             s-for="item in data" 
             s-bind="{title: item.title, date: item.date, detail: item.detail}"

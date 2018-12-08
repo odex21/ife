@@ -11,7 +11,7 @@ export default {
             Data.push({
                 title: total++,
                 date: Date(),
-                detail: '什么也没有'
+                detail: "什么也没有"
             })
         }
         
