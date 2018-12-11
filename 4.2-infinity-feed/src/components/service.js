@@ -23,7 +23,7 @@ export default {
         }
         console.log(index)
         const i = (index < 980) ? index: 0,
-            data =  Data.slice(i, i + 20)
+            data =  Data.slice(i, i + 60)
         console.log(data)
         return data
 

@@ -29,7 +29,6 @@ export default class App extends Component {
 
     attached() {
         console.log("app")
-        console.log(this.data.get('data'))
         console.log(document.documentElement.clientHeight)
         this.el.style.height = document.documentElement.clientHeight + 'px'
         const conetent = this
@@ -89,14 +88,16 @@ export default class App extends Component {
             isAdding = this.data.get('isAdding')
 
         
-        if(scrollTop + height > total -50){
+        if((scrollTop + height) / total > 0.8){
             if(!isAdding){
                 this.data.set('isAdding', true)
                 console.log("yes")
                 setTimeout(() => {
                     this.actions.Add()
                     this.data.set('isAdding', false)
-                }, 200)
+                }, 100)
+            }else{
+                console.log("请求太快")
             }
 
         }
