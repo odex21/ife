@@ -5,17 +5,18 @@ const clone = (source) => {
 
 
 export default {
-	addTodo(todo){
+	addTodo(todo) {
 		return this.Todos().then(todos => {
 			let id = 1;
 
-			if(todos[0]){
+			if (todos[0]) {
 				id = todos[0].id + 1;
 			}
-			let _todo = { 
-				title: todo.title, 
-				done: false, 
-				id: id};
+			let _todo = {
+				title: todo.title,
+				done: false,
+				id: id
+			};
 			todos.unshift(_todo)
 			this.Save(todos)
 			return _todo
@@ -23,38 +24,38 @@ export default {
 
 	},
 
-	editTodo(todo_){//可能要修改，没做disaptch方法
+	editTodo(todo_) {//可能要修改，没做disaptch方法
 		const todo = clone(todo_);
 		this.Todos().then(todos => {
-			let index = todos.findIndex(item =>item.id === todo.id);
+			let index = todos.findIndex(item => item.id === todo.id);
 			todos[index] = todo
 			this.Save(todos)
 		})
-	},	
+	},
 
-	Todos(){
+	Todos() {
 		const todos = JSON.parse(window.localStorage.getItem('todos') || '[]');
 		return new Promise(resolve => {
 			resolve(todos)
 		})
 	},
 
-	Save(todos){
+	Save(todos) {
 		window.localStorage.setItem("todos", JSON.stringify(todos))
 	},
 
-	rmTodo(todo){
-		setTimeout(() => {
-
-			return this.Todos().then(todos => {
+	rmTodo(todo) {
+		return this.Todos().then(todos => {
+			return new Promise((resolve) => {
 				const index = todos.findIndex(item => item.id === todo.id);
 				todos.splice(index, 1);
 				this.Save(todos)
+				resolve()
 			})
-		}, 100)
+		})
 	},
 
-	doneTodo(todo){
+	doneTodo(todo) {
 		return this.Todos().then(todos => {
 			const index = todos.findIndex(item => item.id === todo.id);
 

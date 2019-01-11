@@ -1,0 +1,15 @@
+<footer class="footer">
+    <span class="todo-count"><strong>{{unDoneNum}}</strong>件未完成</span>
+    <ul class="box">
+        <li>
+            <router-link to='/'>all</router-link>
+        </li>
+        <li>
+            <router-link to='/active'>active</router-link>
+        </li>
+        <li>
+            <router-link to='/complete'>complete</router-link>
+        </li>
+    </ul>
+    <button s-if="{{doneNum}}" class="clear-completed" on-click="clearDone">清除已完成</button>
+</footer>

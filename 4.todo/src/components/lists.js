@@ -25,23 +25,35 @@ let input = san.defineComponent({
     }
 })
 
+class list extends Component {
+    static template = `        
+    <li class="li" >
+    <slot />
+    </li>`
+
+    transition() {
+        return transition(...arguments)
+    }
+}
+
 export default class List extends Component {
 
     static template = `
-    <ul class="todo-lists" >
+    <ul class="todo-lists" s-transition="transition('remove', 0)">
         <li class="list {{list.done? 'complete': ''}}" s-for="list, index in todos" s-transition="transition('slide', 0)">
             <div class="view" s-if="{{!list.editing}}">
-                <input type="checkbox" checked="{=list.done=}" on-click="complete(list)">
-                <label on-click="edit(index)" >{{list.title}}</label>
-                <button class="delete" on-click="rmTodo(list)"></button>
-                </div>
+            <input type="checkbox" checked="{=list.done=}" on-click="complete(list, index)">
+            <label on-dblclick="edit(index)" >{{list.title}}</label>
+            <button class="delete"  on-click="rmTodo(list)">{{bArr[index]}}</button>
+            </div>
             <s-input title="{= list.title =}"   s-if="{{list.editing}}" 
                 on-change="change(index)" on-blur="cancel(index, list)"><s-input>
         </li>
     </ul>
     `
     static components = {
-        's-input': input
+        's-input': input,
+        's-li': list
     }
     route() {
         console.log("Lists is routed")
@@ -53,12 +65,35 @@ export default class List extends Component {
         this.actions.lists(str)//更新todos
     }
 
+    static computed = {
+        bArr: function () {
+            const obj = this.data.get('todos')
+            if (!obj) { return }
+            const l = obj.length
+            const arr = []
+            for (let i = 0; i < l; i++) {
+                arr[i] = "x"
+            }
+            return arr
+        }
+    }
+
     edit(i) {
         this.data.set("todos." + i + ".editing", true)
     }
 
-    complete(l) {
-        this.actions.done({ list: l, isRM: !this.data.get('isAll') })
+    complete(l, i) {
+        console.log(
+            this.data.get('bArr')
+        )
+        this.data.set("bArr." + i, '')
+        console.log(
+            this.data.get('bArr')
+        )
+        setTimeout(() => {
+
+            this.actions.done({ list: l, isRM: !this.data.get('isAll') })
+        }, 10)
     }
 
     change(i) {
@@ -79,6 +114,7 @@ export default class List extends Component {
     transition() {
         return transition(...arguments)
     }
+
     rmTodo(list) {
         this.actions.rm(list);
     }

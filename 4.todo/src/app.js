@@ -6,7 +6,9 @@ import './components/actions'
 import { connect } from 'san-store'
 import { Router } from 'san-router'
 import './main'
-import { Input } from 'element-ui';
+import testApi from './components/testApi'
+
+//new testApi().attach(document.body)
 
 connect.san(
     { todos: 'todos', selected: 'selected' },
@@ -26,7 +28,7 @@ connect.san({},
 )(Todo)
 
 connect.san(
-    { unDoneNum: 'unDoneNum' },
+    { unDoneNum: 'unDoneNum', doneNum: 'doneNum' },
     {
         clear: 'clearDones'
     })(Control)

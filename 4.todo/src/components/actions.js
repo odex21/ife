@@ -20,7 +20,7 @@ store.addAction('updateSelected', selected => {
 
 
 store.addAction('fillTodos', (todos, { getState, dispatch }) => {
-    let sel = false, unDone = 0;
+    let sel = false
 
     switch (getState('selected')) {
         case '':
@@ -44,6 +44,7 @@ store.addAction('fillTodos', (todos, { getState, dispatch }) => {
 store.addAction('addTodo', (rowTodo, { dispatch }) => {
     service.addTodo(rowTodo).then(todo => {
         dispatch('endAddTodo', todo)
+        dispatch('checkDone')
     })
 })
 
@@ -52,9 +53,16 @@ store.addAction('endAddTodo', (todo) => {
 })
 
 
-store.addAction('rmTodo', (todo, { getState }) => {
-    service.rmTodo(todo);
-    const index = getState('todos').findIndex(item => item.id === todo.id);
+store.addAction('rmTodo', (todo, { getState, dispatch }) => {
+    service.rmTodo(todo).then(() => {
+        const index = getState('todos').findIndex(item => item.id === todo.id);
+        dispatch('removeTodo', index)
+        dispatch('checkDone')
+
+    })
+})
+
+store.addAction('removeTodo', (index) => {
     return builder().removeAt('todos', index)
 })
 
@@ -64,10 +72,10 @@ store.addAction('editTodo', (todo) => {
 
 store.addAction('doneTodo', (todo, { getState, dispatch }) => {
     console.log(todo)
-    
+
     service.doneTodo(todo.list).then(item => {
         if (todo.isRM) {
-            
+
             dispatch('endDoneTodo', item)
         }
         dispatch('checkDone')
@@ -81,25 +89,31 @@ store.addAction('endDoneTodo', (todo, { getState }) => {
 })
 
 //更新未完成的数量
-store.addAction('checkDone', (payload , {dispatch}) => {
+store.addAction('checkDone', (payload, { dispatch }) => {
     console.log("checking!")
     service.Todos().then(todos => {
-            let todosFit = todos.filter(todo => todo.done === false)
-            console.log(todosFit)
-            console.log(todos)
-            dispatch('updateUnDone', todosFit.length)
-        })
+        let todosFit = todos.filter(todo => todo.done === false)
+        console.log(todosFit)
+        console.log(todos)
+        dispatch('updateUnDone', todosFit.length)
+        dispatch('updateDone', todos.length - todosFit.length)
+    })
+})
+
+store.addAction('updateDone', (num) => {
+    console.log(num)
+    return builder().set('doneNum', num)
 })
 
 store.addAction('updateUnDone', (num) => {
     return builder().set('unDoneNum', num)
 })
 
-store.addAction('clearDones', (payload, {getState, dispatch}) => {
+store.addAction('clearDones', (payload, { getState, dispatch }) => {
     service.Todos().then(todos => {
 
-        for(let i = 0; i < todos.length; i++){
-            if(todos[i].done){
+        for (let i = 0; i < todos.length; i++) {
+            if (todos[i].done) {
                 dispatch('rmTodo', todos[i])
             }
         }
