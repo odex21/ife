@@ -90,8 +90,8 @@ export default class List extends Component {
         console.log(
             this.data.get('bArr')
         )
+        //set方法可能是异步的，导致done先触发，然后数据被锁定，无法操作
         setTimeout(() => {
-
             this.actions.done({ list: l, isRM: !this.data.get('isAll') })
         }, 10)
     }

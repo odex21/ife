@@ -8,7 +8,7 @@ import { Router } from 'san-router'
 import './main'
 import testApi from './components/testApi'
 
-//new testApi().attach(document.body)
+new testApi().attach(document.body)
 
 connect.san(
     { todos: 'todos', selected: 'selected' },

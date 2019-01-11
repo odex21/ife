@@ -99,6 +99,12 @@ body {
     flex-wrap: nowrap;
     overflow: hidden;
     width: 200%;
+
+    // 空白幽灵节点会导致容器空了之后还有占位，导致动画卡顿
+    &:before {
+        content: 'x';
+        color: transparent;
+    }
 }
 
 .new-todo, .edit {
