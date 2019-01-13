@@ -1,0 +1,10 @@
+<ul class="todo-lists" s-transition="ransition('remove', 0)">
+    <li class="list {{list.done? 'complete': ''}}" s-for="list, index in todos" s-transition="transition('slide', 10)">
+        <div class="view" s-if="{{!list.editing}}">
+            <input type="checkbox" checked="{=list.done=}" on-click="complete(list, index)">
+            <label on-dblclick="edit(index)">{{list.title}}</label>
+            <button class="delete" on-click="rmTodo(list, index)">{{bArr[index]}}</button>
+        </div>
+        <s-input title="{= list.title =}" s-if="{{list.editing}}" on-change="change(index)" on-blur="cancel(index, list)"></s-input>
+    </li>
+</ul>

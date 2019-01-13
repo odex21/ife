@@ -1,53 +1,58 @@
+liWidth = 550px;
+anTime = 0.3s;
+
 .slide {
     &-enter {
-        transition: all 0.3s ease-out;
-    }
-
-    &-enter, &-before-leave {
+        transition: all anTime ease-out;
         opacity: 1;
         height: 58px;
         transform: translate(0, 0);
     }
 
-    &-before-enter, &-leave {
+    &-before-enter {
         height: 0;
         opacity: 0;
-        transform: translate(20px, 0);
+        transform: translate(30px, 0);
     }
 
     &-before-leave {
-        opacity: 0.5;
+        opacity: 1;
         height: 58px;
+        // transform: translate(0, 0);
     }
 
     &-leave {
-        transform: translate(-200px, 0);
-        transition: all 0.3s ease-out;
+        transition: all anTime ease-out;
+        height: 0;
+        opacity: 0;
+        // transform: translate(-100px, 0);
     }
 }
 
 .remove {
-    &-enter, &-leave {
-        transition: all 0.3s ease-out;
-    }
-
-    &-before-leave {
-        opacity: 1;
-        transform: translate(0px, 0);
-    }
-
     &-enter {
+        transition: all 0.3s ease-out;
         opacity: 1;
-        transform: translate(-550px, 0);
+        max-height: 9999px;
+        transform: translate((-(liWidth)), 0);
     }
 
     &-before-enter {
         opacity: 0;
-        transform: translate(-500px, 0);
+        max-height: 0px;
+        transform: translate((-(liWidth / 4 * 3)), 0);
+    }
+
+    &-before-leave {
+        opacity: 1;
+        max-height: 9999px;
+        transform: translate(0px, 0);
     }
 
     &-leave {
+        transition: all 0.3s ease-out;
         opacity: 0;
+        max-height: 0px;
         transform: translate(-100px, 0);
     }
 }
@@ -98,12 +103,13 @@ body {
     display: inline-flex;
     flex-wrap: nowrap;
     overflow: hidden;
-    width: 200%;
+    width: 100%;
 
     // 空白幽灵节点会导致容器空了之后还有占位，导致动画卡顿
     &:before {
         content: 'x';
         color: transparent;
+        font-size: 0;
     }
 }
 
@@ -139,12 +145,13 @@ body {
     margin: 0;
     padding: 0;
     list-style: none;
-    width: 550px;
+    width: 100%;
 
     li {
         position: relative;
         font-size: 24px;
         border-bottom: 1px solid #ededed;
+        width: liWidth;
 
         &:last-child {
             border-bottom: none;
@@ -267,6 +274,7 @@ body {
                     text-decoration: none;
                     border: 1px solid transparent;
                     border-radius: 3px;
+                    cursor: pointer;
 
                     &:hover {
                         border-color: rgba(175, 47, 47, 0.1);

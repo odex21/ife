@@ -3,10 +3,11 @@ import { builder } from 'san-update'
 import service from './service'
 
 store.addAction('fetchTodos', (selected, { getState, dispatch }) => {
+    console.log("??/")
     dispatch('updateSelected', selected);
     return service.Todos().then(todos => {
-
-        if (getState('selected') === selected) {
+        const sel = getState('selected')
+        if (sel === selected) {
             dispatch('checkDone')
             dispatch('fillTodos', todos)
         }
@@ -21,9 +22,10 @@ store.addAction('updateSelected', selected => {
 
 store.addAction('fillTodos', (todos, { getState, dispatch }) => {
     let sel = false
-
-    switch (getState('selected')) {
-        case '':
+    const state = getState('selected')
+    switch (state) {
+        case null:
+        case '#':
             return builder().set('todos', todos);
         case 'active':
             break;
@@ -56,6 +58,7 @@ store.addAction('endAddTodo', (todo) => {
 store.addAction('rmTodo', (todo, { getState, dispatch }) => {
     service.rmTodo(todo).then(() => {
         const index = getState('todos').findIndex(item => item.id === todo.id);
+        console.log(index)
         dispatch('removeTodo', index)
         dispatch('checkDone')
 
@@ -90,18 +93,15 @@ store.addAction('endDoneTodo', (todo, { getState }) => {
 
 //更新未完成的数量
 store.addAction('checkDone', (payload, { dispatch }) => {
-    console.log("checking!")
+    console.log("checking Done!")
     service.Todos().then(todos => {
         let todosFit = todos.filter(todo => todo.done === false)
-        console.log(todosFit)
-        console.log(todos)
         dispatch('updateUnDone', todosFit.length)
         dispatch('updateDone', todos.length - todosFit.length)
     })
 })
 
 store.addAction('updateDone', (num) => {
-    console.log(num)
     return builder().set('doneNum', num)
 })
 

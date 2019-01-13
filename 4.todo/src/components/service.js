@@ -45,13 +45,14 @@ export default {
 	},
 
 	rmTodo(todo) {
-		return this.Todos().then(todos => {
-			return new Promise((resolve) => {
-				const index = todos.findIndex(item => item.id === todo.id);
-				todos.splice(index, 1);
-				this.Save(todos)
-				resolve()
-			})
+		const todos = JSON.parse(window.localStorage.getItem('todos') || '[]');
+		const index = todos.findIndex(item => item.id === todo.id);
+		console.log(index)
+		todos.splice(index, 1);
+		this.Save(todos)
+
+		return new Promise((resolve) => {
+			resolve()
 		})
 	},
 

@@ -1,11 +1,10 @@
-import Lists from './components/lists'
+import Lists from './components/lists/lists'
 import Todo from './components/todo'
-import Control from './components/control'
+import Control from './components/control/control'
 import './components/css'
 import './components/actions'
 import { connect } from 'san-store'
-import { Router } from 'san-router'
-import './main'
+//import { Router } from 'san-router'
 import testApi from './components/testApi'
 
 new testApi().attach(document.body)
@@ -30,15 +29,17 @@ connect.san({},
 connect.san(
     { unDoneNum: 'unDoneNum', doneNum: 'doneNum' },
     {
-        clear: 'clearDones'
+        clear: 'clearDones',
+        lists: 'fetchTodos'
     })(Control)
 
 
 new Todo().attach(document.body.children["todoapp"].children["input"])
 new Control().attach(document.body.children["todoapp"].children['controlBox'])
+new Lists().attach(document.body.children["todoapp"].children['todoLists'])
 
 
-let router = new Router;
+/* let router = new Router;
 
 const routes = [
     {
@@ -58,4 +59,4 @@ routes.forEach(item => {
     })
 })
 //router.setMode('html5')
-router.start()
+router.start() */
