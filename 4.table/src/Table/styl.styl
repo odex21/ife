@@ -1,0 +1,634 @@
+// 表格内部宽度, 不够宽右边固定的阴影就不能消失了
+www = 100%;
+// 表格默认文字大小
+fontsize = 13px;
+// 最大宽度
+maxHeight = 500px;
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.s-table {
+    // text-align: left;
+    position: relative;
+    width: 100%;
+    height: h = auto;
+    font-variant: tabular-nums;
+    font-size: fontsize;
+    white-space: nowrap;
+
+    // table标签的统一设置
+    &-body {
+        width: www;
+        table-layout: fixed;
+        background-color: white;
+        border-collapse: collapse;
+        text-align: left;
+        border-radius: 4px 4px 0 0;
+
+        tr {
+            &:hover, &.hover {
+                background-color: rgb(230, 247, 255);
+            }
+
+            &.rowChecked {
+                background-color: rgb(250, 250, 250);
+                transition: all 0.3s ease;
+            }
+
+            td {
+                padding: 16px;
+                border-bottom: 1px solid #e8e8e8;
+                height: h = auto;
+
+                &.sorted {
+                    background-color: rgba(0, 0, 0, 0.01);
+                }
+            }
+        }
+
+        td, th {
+            text-overflow: ellipsis;
+            overflow: hidden;
+
+            div {
+                display: inline-block;
+                width: 100%;
+                text-align: left;
+
+                a {
+                    // display: block;
+                    // margin: 0 auto;
+                    cursor: pointer;
+                    padding-right: 5px;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    // thead标签的设置
+    &-header {
+        th {
+            color: rgba(0, 0, 0, 0.85);
+            background: #fafafa;
+            transition: background 0.3s ease;
+            padding: 16px;
+            border-bottom: 1px solid #e8e8e8;
+
+            div {
+                display: inline-block;
+                width: 100%;
+                text-align: left;
+            }
+
+            &:first-child {
+                // border-top-left-radius: 4px;
+            }
+        }
+
+        &-hasActions {
+            padding-right: 30px !important;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+
+            &.sorted {
+                background-color: rgb(245, 245, 245);
+            }
+
+            &:hover {
+                background-color: #f2f2f2;
+            }
+
+            &-sorters {
+                &:before {
+                    position: absolute;
+                    content: '';
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: transparent;
+                    -webkit-transition: all 0.3s;
+                    transition: all 0.3s;
+                    -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+                }
+
+                &:active {
+                    .sorter-up, .sorter-down {
+                        color: rgba(0, 0, 0, 0.45);
+                    }
+                }
+            }
+
+            .sortersWrapper {
+                position: absolute;
+                right: 6px;
+                top: 50%;
+                width: 14px;
+                height: 17px;
+                margin-top: -8.5px;
+                text-align: center;
+                color: #bfbfbf;
+                -webkit-transition: all 0.3s;
+                transition: all 0.3s;
+
+                .sorter-up, .sorter-down {
+                    -webkit-transform: scale(0.91666667) rotate(0deg);
+                    -ms-transform: scale(0.91666667) rotate(0deg);
+                    transform: scale(0.91666667) rotate(0deg);
+                    // display: inline-block;
+                    // font-size: 12px;
+                    // font-size: 11px \9;
+                    font-size: 12px;
+                    line-height: 4px;
+                    height: 4px;
+                    -webkit-transition: all 0.3s;
+                    transition: all 0.3s;
+                    display: block;
+
+                    &.on {
+                        color: #1890ff;
+                    }
+                }
+
+                .sorter-down {
+                    margin-top: 4px;
+                }
+            }
+        }
+
+        &-hasFilter {
+            padding-right: 54px !important;
+            position: relative;
+
+            .sortersWrapper {
+                right: 34px !important;
+            }
+        }
+
+        &-filter {
+            font-size: 12px;
+            cursor: pointer;
+            color: #bfbfbf;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            width: 28px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            text-align: center;
+
+            svg {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-top: -5px;
+                margin-left: -6px;
+            }
+        }
+    }
+
+    // 复制table表头时候的table-body的包裹
+    .thfix {
+        overflow: scroll;
+        max-height: maxHeight;
+    }
+
+    .fixHeader {
+        overflow-y: scroll;
+
+        table {
+            overflow: scroll;
+            // 好像给表头也加个scroll靠谱点
+        }
+    }
+
+    // 复制的table列，分左右
+    &-listFix {
+        &-left, &-right {
+            table {
+                width: auto;
+            }
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            box-shadow: 6px 0 6px -4px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease, -webkit-box-shadow 0.3s ease;
+            overflow: hidden;
+
+            .listFix-body {
+                overflow: scroll;
+                max-height: maxHeight;
+                margin-right: -20px;
+                background-color: white;
+
+                table {
+                    td {
+                        box-sizing: border-box;
+
+                        div {
+                            // box-sizing: border-box;
+                            a {
+                                box-sizing: border-box;
+                                width: 100px;
+                                text-overflow: ellipsis;
+                                overflow: hidden;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.noShawdow {
+                box-shadow: none;
+            }
+        }
+
+        &-right {
+            right: 0;
+            box-shadow: -6px 0 6px -4px rgba(0, 0, 0, 0.15);
+
+            .listFix-body {
+                table {
+                    td {
+                        // height: h;
+                    }
+                }
+            }
+        }
+    }
+
+    &-checkbox {
+        width: 50px;
+
+        div {
+            text-align: center !important;
+        }
+
+        label {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            font-size: 14px;
+            font-variant: tabular-nums;
+            line-height: 1.5;
+            color: rgba(0, 0, 0, 0.65);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            line-height: unset;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+
+            span {
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                // margin: 0;
+                // padding: 0;
+                // list-style: none;
+                // white-space: nowrap;
+                // cursor: pointer;
+                outline: none;
+                display: inline-block;
+                line-height: 1;
+                position: relative;
+                vertical-align: middle;
+                top: -0.09em;
+
+                input {
+                    position: absolute;
+                    left: 0;
+                    z-index: 1;
+                    cursor: pointer;
+                    opacity: 0;
+                    top: 0;
+                    bottom: 0;
+                    right: 0;
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+
+                    &:focus + span {
+                        border-color: #1890ff;
+                    }
+
+                    // check后选择后面的span改变状态
+                    &:checked {
+                        & + span {
+                            background-color: #1890ff;
+                            border-color: #1890ff;
+
+                            &:after {
+                                -webkit-transform: rotate(45deg) scale(1);
+                                -ms-transform: rotate(45deg) scale(1);
+                                transform: rotate(45deg) scale(1);
+                                -webkit-transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+                                transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+                                position: absolute;
+                                display: table;
+                                border: 2px solid #fff;
+                                border-top: 0;
+                                border-left: 0;
+                                content: ' ';
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+
+                span {
+                    position: relative;
+                    top: 0;
+                    left: 0;
+                    display: block;
+                    width: 16px;
+                    height: 16px;
+                    border: 1px solid #d9d9d9;
+                    border-radius: 2px;
+                    background-color: #fff;
+                    -webkit-transition: all 0.3s;
+                    transition: all 0.3s;
+                    border-collapse: separate;
+
+                    // opacity: 0;
+                    &::after {
+                        -webkit-transform: rotate(45deg) scale(0);
+                        -ms-transform: rotate(45deg) scale(0);
+                        transform: rotate(45deg) scale(0);
+                        position: absolute;
+                        left: 4px;
+                        top: 1px;
+                        display: table;
+                        width: 4px;
+                        height: 9px;
+                        border: 2px solid #fff;
+                        border-top: 0;
+                        border-left: 0;
+                        content: ' ';
+                        -webkit-transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+                        transition: all 0.1s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+
+        // hover边框高亮
+        &:hover {
+            .s-table-checkbox-inner {
+                border-color: #1890ff;
+            }
+        }
+
+        // thead的半选择状态
+        &.indeterminate {
+            // background-color: blue;
+            .s-table-checkbox-inner {
+                background-color: #fff;
+                border-color: #d9d9d9;
+
+                &:after {
+                    content: ' ';
+                    -webkit-transform: translate(-50%, -50%) scale(1);
+                    -ms-transform: translate(-50%, -50%) scale(1);
+                    transform: translate(-50%, -50%) scale(1);
+                    border: 0;
+                    left: 50%;
+                    top: 50%;
+                    width: 8px;
+                    height: 8px;
+                    background-color: #1890ff;
+                    opacity: 1;
+                    // transition: all 0.3s cubic-bezier(0.71, -0.46, 0.88, 0.6), opacity 0.1s;
+                }
+            }
+        }
+    }
+
+    .ant-dropdown {
+        font-size: 14px;
+        font-variant: tabular-nums;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.65);
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: absolute;
+        left: -9999px;
+        top: -9999px;
+        z-index: 1050;
+        display: block;
+
+        &:before {
+            position: absolute;
+            top: -7px;
+            left: -7px;
+            right: 0;
+            bottom: -7px;
+            content: ' ';
+            opacity: 0.0001;
+        }
+
+        &-menu {
+            outline: none;
+            position: relative;
+            // list-style-type: none;
+            padding: 4px 0;
+            margin: 0;
+            text-align: left;
+            background-color: #fff;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            background-clip: padding-box;
+            -webkit-transform: translate3d(0, 0, 0);
+            list-style: none;
+
+            &-item, &-submenu-title {
+                padding: 5px 12px;
+                margin: 0;
+                clear: both;
+                font-size: 14px;
+                font-weight: normal;
+                color: rgba(0, 0, 0, 0.65);
+                white-space: nowrap;
+                cursor: pointer;
+                -webkit-transition: all 0.3s;
+                transition: all 0.3s;
+                line-height: 22px;
+
+                &:hover {
+                    background-color: #e6f7ff;
+                }
+            }
+
+            &-item-selected {
+            }
+        }
+    }
+
+    .ant-radio-wrapper {
+        font-size: 14px;
+        font-variant: tabular-nums;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.65);
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: inline-block;
+        position: relative;
+        white-space: nowrap;
+        margin-right: 8px;
+        cursor: pointer;
+
+        .ant-radio {
+            font-size: 14px;
+            font-variant: tabular-nums;
+            line-height: 1.5;
+            color: rgba(0, 0, 0, 0.65);
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            white-space: nowrap;
+            outline: none;
+            display: inline-block;
+            position: relative;
+            line-height: 1;
+            vertical-align: sub;
+            cursor: pointer;
+
+            &:hover, &:focus {
+                .ant-radio-inner {
+                    border-color: #1890ff;
+                }
+            }
+
+            &-checked {
+                .ant-radio-inner {
+                    border-color: #1890ff;
+
+                    &::after {
+                        -webkit-transform: scale(0.875);
+                        -ms-transform: scale(0.875);
+                        transform: scale(0.875);
+                        opacity: 1;
+                        -webkit-transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+                        transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+                    }
+                }
+            }
+
+            &-input {
+                position: absolute;
+                left: 0;
+                z-index: 1;
+                cursor: pointer;
+                opacity: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                touch-action: manipulation;
+            }
+
+            &-inner {
+                position: relative;
+                top: 0;
+                left: 0;
+                display: block;
+                width: 16px;
+                height: 16px;
+                border-width: 1px;
+                border-style: solid;
+                border-radius: 100px;
+                border-color: #d9d9d9;
+                background-color: #fff;
+                -webkit-transition: all 0.3s;
+                transition: all 0.3s;
+
+                &:after {
+                    position: absolute;
+                    width: 8px;
+                    height: 8px;
+                    left: (@width / 2); // 尝试一下属性查找
+                    top: 4px;
+                    border-radius: 8px;
+                    display: table;
+                    border-top: 0;
+                    border-left: 0;
+                    content: ' ';
+                    background-color: #1890ff;
+                    opacity: 0;
+                    -webkit-transform: scale(0);
+                    -ms-transform: scale(0);
+                    transform: scale(0);
+                    -webkit-transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+                    transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+                }
+            }
+        }
+    }
+
+    &-filter-dropdown {
+        min-width: 96px;
+        margin-left: -8px;
+        background: #fff;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        position: relative;
+
+        &-btns {
+            overflow: hidden;
+            padding: 7px 8px;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        &-link {
+            color: #1890ff;
+            outline: none;
+            cursor: pointer;
+            text-decoration: none;
+
+            &.confirm {
+                float: left;
+            }
+
+            &.clear {
+                float: right;
+            }
+        }
+
+        .ant-dropdown-menu {
+            border: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border-radius: 4px 4px 0 0;
+
+            &-without-submenu {
+                max-height: 400px;
+                overflow-x: hidden;
+            }
+
+            &-item {
+                overflow: hidden;
+
+                label+span {
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+}

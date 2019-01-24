@@ -1,0 +1,15 @@
+<footer class="footer">
+    <span class="todo-count"><strong>{{unDoneNum}}</strong>件未完成</span>
+    <ul class="box">
+        <li>
+            <a class="{{selected == '' || selected == undefined ? 'selected': ''}}" on-click='to("")'>all</a>
+        </li>
+        <li>
+            <a class="{{selected == 'active' ? 'selected': ''}}" on-click='to("active")'>active</a>
+        </li>
+        <li>
+            <a class="{{selected == 'complete' ? 'selected': ''}}" on-click='to("complete")'>complete</a>
+        </li>
+    </ul>
+    <button s-if="{{doneNum}}" class="clear-completed" on-click="clearDone">清除已完成</button>
+</footer>

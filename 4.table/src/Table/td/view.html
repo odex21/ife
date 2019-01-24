@@ -1,0 +1,4 @@
+<td class="{{key.sorter && key.sorter.state !== 0 ? 'sorted' : ''}}" title="{{item[key]}}" width="{{width}}" title="{{item[key.dataIndex]? item[key.dataIndex] : ''}}">
+    {{key.html ? '' : item[key.dataIndex]}}
+    <div s-html="item.render[key.key]" s-if="{{key.render}}"></div>
+</td>

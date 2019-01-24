@@ -1,0 +1,81 @@
+<div class="s-table" on-click="capture:close($event)">
+    <!-- 表格本体 -->
+    <div>
+        <!-- 固定表头用这个分离的table -->
+        <div s-if="{{thfix}}" style="overflow:hidden; margin-bottom: -17px">
+            <div class="fixHeader">
+                <table class="s-table-body">
+                    <s-thead Columns="{{showKeys}}" on-sort="sort($event)" on-filter="filter($event)">
+                        <checkbox-th s-if="{{rowSelection}}" checkboxClass="{{checkboxClass}}" allChecked="{= allChecked =}"
+                            on-allchecked="showAllcheck"></checkbox-th>
+                    </s-thead>
+                </table>
+            </div>
+        </div>
+        <div class="{{thfix ? 'thfix': ''}}" on-mouseover="wheelCheck(0)" on-scroll="listScroll($event, 0)">
+            <table class="s-table-body">
+                <!-- 一般表头 -->
+                <!-- 现在这里尝试加个选项框 -->
+                <s-thead s-if="{{!thfix}}" Columns="{{showKeys}}" on-sort="sort($event)" on-filter="filter($event)">
+
+                    <checkbox-th s-if="{{rowSelection}}" checkboxClass="{{checkboxClass}}" allChecked="{= allChecked =}"
+                        on-allchecked="showAllcheck"></checkbox-th>
+                </s-thead>
+                <tbody class="s-table-mainTbody">
+                    <tr s-for="item, index in listDataCal" class="{{item.checked ? 'rowChecked': ''}}">
+
+                        <checkbox-td s-if="{{rowSelection}}" item="{{item}}" on-checked="showSelected(item, index)"
+                            selectedRowKeys="{= selectedRowKeys =}">
+                        </checkbox-td>
+                        <s-td s-for="key, index in showKeys" key="{{key}}" item="{{item}}" width="{{Columns[index].width}}px"></s-td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 复制的用来固定列表用的table -->
+    <div s-if="{{LBfix}}" class="s-table-listFix-left {{showdowLeft ? '': 'noShawdow'}}">
+        <table class="s-table-body" sytle="width=auto">
+            <thead class="s-table-header">
+                <s-thead Columns="{{showKeysFitLeft}}">
+                    <checkbox-th s-if="{{rowSelection}}" checkboxClass="{{checkboxClass}}" allChecked="{= allChecked =}"
+                        on-allchecked="showAllcheck"></checkbox-th>
+                </s-thead>
+                <!-- <th s-for="t in showKeysFitLeft" width="{{t.width}}px">{{t.title}}</th> -->
+            </thead>
+        </table>
+        <div style="margin-bottom: -17px; padding-bottom: 0px;">
+            <div class="listFix-body" on-mouseover="wheelCheck(1)" on-scroll="listScroll($event, 1)">
+                <table class="s-table-body ">
+                    <tr s-for="item, index in listDataCal" class="{{item.checked ? 'rowChecked': '??'}}" on-mouseover="hoverConnect(index)"
+                        on-mouseout="hoverDisConnect(index)">
+                        <checkbox-td s-if="{{rowSelection}}" item="{{item}}" on-checked="showSelected(item, index)"
+                            selectedRowKeys="{= selectedRowKeys =}">
+                        </checkbox-td>
+                        <s-td s-for="key, index in showKeysFitLeft" key="{{key}}" item="{{item}}" width="{{showKeysFitLeft[index].width}}px"></s-td>
+
+                        <!-- <td s-for="key, index in showKeysFitLeft" width="{{showKeysFitLeft[index].width}}px">{{item[key.dataIndex]}}</td> -->
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div s-if="{{RBfix}}" class="s-table-listFix-right {{showdowRight ? '': 'noShawdow'}}">
+        <div style="margin-right: -20px; overflow: hidden; background-color: #fafafa;">
+            <table class="s-table-body" sytle="width=auto">
+                <s-thead Columns="{{showKeysFitRight}}"></s-thead>
+            </table>
+        </div>
+        <div style="margin-bottom: -17px; padding-bottom: 0px;">
+            <div class="listFix-body" on-mouseover="wheelCheck(1)" on-scroll="listScroll($event, 1)">
+                <table class="s-table-body ">
+                    <tr s-for="item in listDataCal" class="{{item.checked ? 'rowChecked': ''}}">
+                        <s-td s-for="key, index in showKeysFitRight" key="{{key}}" item="{{item}}" width="{{showKeysFitRight[index].width}}px"></s-td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

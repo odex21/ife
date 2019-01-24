@@ -1,0 +1,32 @@
+<div style="position: absolute; top: 0px; left: 0px; width: 100%;">
+    <div>
+        <div class="ant-dropdown ant-dropdown-placement-bottomRight" style="left:{{position.left}};top:{{position.top}}">
+            <div class="s-table-filter-dropdown">
+                <ul class="ant-dropdown-menu ant-dropdown-menu-without-submenu ant-dropdown-menu-root ant-dropdown-menu-vertical"
+                    role="menu" tabindex="0">
+                    <li s-for="item,index in filters" class="ant-dropdown-menu-item" role="menuitem" on-click="chose(index)">
+                        <label class="ant-radio-wrapper">
+                            <span class="ant-radio {{item.checked ? 'ant-radio-checked' : ''}}">
+                                <input type="radio" class="ant-radio-input" value="">
+                                <span class="ant-radio-inner"></span></span>
+                        </label>
+                        <span>{{item.text}}</span>
+                    </li>
+                    <!-- <li class="ant-dropdown-menu-item" role="menuitem">
+                        <label class="ant-radio-wrapper">
+                            <span class="ant-radio">
+                                <input type="radio" class="ant-radio-input" value="">
+                                <span class="ant-radio-inner"></span>
+                            </span>
+                        </label>
+                        <span>New York</span>
+                    </li> -->
+                </ul>
+                <div class="s-table-filter-dropdown-btns">
+                    <a class="s-table-filter-dropdown-link confirm" on-click="confirm">确定</a>
+                    <a class="s-table-filter-dropdown-link clear" on-click="cancel">重置</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
